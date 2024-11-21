@@ -1,0 +1,150 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Home</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>My Drive</h1>-->
+<!--    &lt;!&ndash; New Button &ndash;&gt;-->
+<!--    <button onclick="document.getElementById('new-options').style.display='block'">New</button>-->
+<!--    <div id="new-options" style="display: none;">-->
+<!--        {% if current_folder %}-->
+<!--            &lt;!&ndash; When inside a folder, pass the folder ID &ndash;&gt;-->
+<!--            <a href="{% url 'create_folder' current_folder.id %}">Create Folder</a><br>-->
+<!--            <a href="{% url 'upload_file' current_folder.id %}">Upload File</a>-->
+<!--        {% else %}-->
+<!--            &lt;!&ndash; When at the root, pass 0 &ndash;&gt;-->
+<!--            <a href="{% url 'create_folder' 0 %}">Create Folder</a><br>-->
+<!--            <a href="{% url 'upload_file' 0 %}">Upload File</a>-->
+<!--        {% endif %}-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Show list of folders and files &ndash;&gt;-->
+<!--    <ul>-->
+<!--        {% for folder in folders %}-->
+<!--            <li>-->
+<!--                <a href="{% url 'home' folder.id %}">{{ folder.name }}</a>-->
+<!--            </li>-->
+<!--        {% endfor %}-->
+<!--        {% for file in files %}-->
+<!--            <li>{{ file.name }}</li>-->
+
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--&lt;!&ndash; Inside the folder listing &ndash;&gt;-->
+
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Home</title>-->
+<!--    <script>-->
+<!--        // JavaScript function to confirm deletion-->
+<!--        function confirmDelete(itemType, itemId) {-->
+<!--            const confirmAction = confirm(`Are you sure you want to delete this ${itemType}? This action is irreversible.`);-->
+<!--            if (confirmAction) {-->
+<!--                // Redirect to the delete view with the item's ID-->
+<!--                window.location.href = `/delete_${itemType}/${itemId}/`;-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>My Drive</h1>-->
+
+<!--    &lt;!&ndash; New Button &ndash;&gt;-->
+<!--    <button onclick="document.getElementById('new-options').style.display='block'">New</button>-->
+<!--    <div id="new-options" style="display: none;">-->
+<!--        {% if current_folder %}-->
+<!--            <a href="{% url 'create_folder' current_folder.id %}">Create Folder</a><br>-->
+<!--            <a href="{% url 'upload_file' current_folder.id %}">Upload File</a>-->
+<!--        {% else %}-->
+<!--            <a href="{% url 'create_folder' 0 %}">Create Folder</a><br>-->
+<!--            <a href="{% url 'upload_file' 0 %}">Upload File</a>-->
+<!--        {% endif %}-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Show list of folders and files &ndash;&gt;-->
+<!--    <ul>-->
+<!--        {% for folder in folders %}-->
+<!--            <li>-->
+<!--                <a href="{% url 'home' folder.id %}">{{ folder.name }}</a>-->
+<!--                &lt;!&ndash; Delete button &ndash;&gt;-->
+<!--                <button onclick="confirmDelete('folder', {{ folder.id }})">Delete</button>-->
+<!--            </li>-->
+<!--        {% endfor %}-->
+<!--        {% for file in files %}-->
+<!--            <li>-->
+<!--                {{ file.name }}-->
+<!--                &lt;!&ndash; Delete button &ndash;&gt;-->
+<!--                <button onclick="confirmDelete('file', {{ file.id }})">Delete</button>-->
+<!--            </li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script>
+        // JavaScript function to confirm deletion
+        function confirmDelete(itemType, itemId) {
+            const confirmAction = confirm(`Are you sure you want to delete this ${itemType}? This action is irreversible.`);
+            if (confirmAction) {
+                // Redirect to the delete view with the item's ID
+                window.location.href = `/delete_${itemType}/${itemId}/`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>My Drive</h1>
+
+    <!-- New Button -->
+    <button onclick="document.getElementById('new-options').style.display='block'">New</button>
+    <div id="new-options" style="display: none;">
+        {% if current_folder %}
+            <a href="{% url 'create_folder' current_folder.id %}">Create Folder</a><br>
+            <a href="{% url 'upload_file' current_folder.id %}">Upload File</a>
+        {% else %}
+            <a href="{% url 'create_folder' 0 %}">Create Folder</a><br>
+            <a href="{% url 'upload_file' 0 %}">Upload File</a>
+        {% endif %}
+    </div>
+
+    <!-- Show list of folders and files -->
+    <ul>
+        {% for folder in folders %}
+            <li>
+                <a href="{% url 'home' folder.id %}">{{ folder.name }}</a>
+                <!-- Edit button for folder -->
+                <button onclick="window.location.href='{% url 'update_folder' folder.id %}'">Edit</button>
+                <!-- Delete button for folder -->
+                <button onclick="confirmDelete('folder', {{ folder.id }})">Delete</button>
+            </li>
+        {% endfor %}
+        {% for file in files %}
+            <li>
+                {{ file.name }}
+                <!-- Edit button for file -->
+                <button onclick="window.location.href='{% url 'update_file' file.id %}'">Edit</button>
+                <!-- Delete button for file -->
+                <button onclick="confirmDelete('file', {{ file.id }})">Delete</button>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Folder: {{ folder.name }}</title>
+</head>
+<body>
+    <h2>{{ folder.name }}</h2>
+    <p>Created at: {{ folder.created_at }}</p>
+    <p>Updated at: {{ folder.updated_at }}</p>
+
+    <h3>Subfolders</h3>
+    <ul>
+        {% for subfolder in folder.subfolders.all %}
+            <li><a href="{% url 'folder_detail' subfolder.id %}">{{ subfolder.name }}</a></li>
+        {% empty %}
+            <p>No subfolders.</p>
+        {% endfor %}
+    </ul>
+
+    <h3>Files</h3>
+    <ul>
+        {% for file in folder.files.all %}
+            <li>{{ file.name }} - <a href="{{ file.file.url }}" download>Download</a></li>
+        {% empty %}
+            <p>No files in this folder.</p>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'create_folder' parent_id=folder.id %}">Create Subfolder</a> |
+    <a href="{% url 'upload_file' folder.id %}">Upload File</a> |
+    <a href="{% url 'folder_detail' folder.parent.id %}">Back to Parent Folder</a> |
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+</html>
+
+
+

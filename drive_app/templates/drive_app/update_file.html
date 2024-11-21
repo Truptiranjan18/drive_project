@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update File</title>
+</head>
+<body>
+    <h1>Update File: {{ file.name }}</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+    </form>
+
+    {% if file.folder %}
+        <a href="{% url 'home' file.folder.id %}">Back</a>
+    {% else %}
+        <a href="{% url 'home' 0 %}">Back</a>
+    {% endif %}
+</body>
+</html>

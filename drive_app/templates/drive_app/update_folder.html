@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Folder</title>
+</head>
+<body>
+    <h1>Update Folder: {{ folder.name }}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+    </form>
+
+    {% if folder.parent %}
+        <a href="{% url 'home' folder.parent.id %}">Back</a>
+    {% else %}
+        <a href="{% url 'home' 0 %}">Back</a>
+    {% endif %}
+</body>
+</html>
